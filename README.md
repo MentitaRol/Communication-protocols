@@ -283,11 +283,11 @@ To execute our automaton tests, follow these steps in the Prolog terminal:
 
 **Load the test file:**
 
-["protocol_tests"].
+    ["protocol_tests"].
 
 **Execute the run function:**
 
-run_tests.
+    run_tests.
 
 ![Image](https://github.com/user-attachments/assets/6cc5d478-c0d9-4837-bd21-37c5e7d17bc6)
 
