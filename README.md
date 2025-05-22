@@ -299,7 +299,7 @@ The test cases print a message indicating the flow that our request was followin
 
 ## Analysis
 
-#### Time complexity:
+### Time complexity:
 In our implementation, we use recursion to process each instruction of the petition while transitioning between states.
 
 Each instruction is processed once by making a transition between states. The recursive depth is at most n, meaning the number of recursive calls is proportional to the number of instructions in the protocol.
@@ -364,7 +364,19 @@ Finally, in the file where we put together all the protocols to simulate the fin
 
 So based on this, the time complexity of this approach is O(n + m + k).
 
-#### Other possible implementations:
+### Other possible implementations:
+A different alternative to the logical paradigm is the functional paradigm. This could be a powerful way to model communication between protocols, as it allows each protocol to be represented as a function that transforms an input into an output. Representing it this way allows for features such as pattern matching and recursion to analyze and process each step of the protocol in a clear and expressive manner.
+
+The code can becomes easier to reason formally and verify its correctness. This feature also facilitates the natural parallelization of operations, since pure functions do not depend on or modify shared states, allowing parts of the computation to be executed concurrently without the risk of race conditions or inconsistencies.
+
+However, the functional paradigm could also have certain disadvantages. Without proper optimization, such as using tail recursion to avoid stack overflows or implementing memoization to avoid repeated calculations, functional solutions can be less efficient in terms of time and resource consumption compared to more direct paradigms such as logic. Another important point to consider is the complexity of a functional language like Scheme. When comparing the code between Prolog and Scheme, we notice a significant difference when implementing certain elements.
+
+**Complexity Analysis:**
+
+Processing lists or sequences of data in a functional approach typically has a linear cost of O(n), where n represents the length of the list or the number of steps in the protocol.
+
+In this sense, if we directly evaluate our implementation, we might consider that, at first glance, the functional paradigm has a lower time complexity.
+
 
 ## References
 
