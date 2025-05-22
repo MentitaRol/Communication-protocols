@@ -27,17 +27,17 @@ for transmitting data across interconnected networks, ensuring efficient and err
 To maintain the scope of the project, I decided to make a very general abstraction of the TCP/IP model. This abstraction is simplified yet explicit enough to demonstrate the core behavior of the protocols involved.
 Of the four layers, I will only be modeling three, each represented by a key protocol:
 
-**Application Layer:**
+#### Application Layer:
 This is closest to the end user and is where applications and user interfaces reside. It serves as the bridge between user programs and the lower layers responsible for data transmission (GeeksforGeeks, 2025).
 
 We will model the HTTP protocol.
 
-**Transport Layer:**
+#### Transport Layer:
 Ensures data is delivered reliably and in the correct order between devices (GeeksforGeeks, 2025).
 
 We will model the TCP protocol.
 
-**Network Layer:**
+#### Network Layer:
 This handles the routing of data packets across networks (GeeksforGeeks, 2025).
 
 We will model the IP protocol.
@@ -57,6 +57,7 @@ Each state transition in the DFA corresponds to a valid stage in the request-res
 ![Image](https://github.com/user-attachments/assets/250237b1-a460-4ccc-8dd0-236f748733f4)
 
 **2.- TCP protocol:**
+
 The TCP protocol represents the stages of a reliable connection between two endpoints. The automaton captures the essential parts of the TCP lifecycle: connection establishment, data transmission, and connection termination.
 
 The DFA begins in an initial state where the client initiates a connection by sending a SYN packet. The server responds with a SYN/ACK, and the client completes the handshake with an ACK. The transition to the termination phase is triggered by the client or server sending a FIN/ACK, followed by a final ACK to confirm the connection closure.
@@ -65,6 +66,7 @@ If at any point the expected packet is missing or out of order, the automaton tr
 ![Image](https://github.com/user-attachments/assets/c5815103-0ccc-4529-b2a3-d6bd5dab67ae)
 
 **3.- IP protocol:**
+
 The IP (Internet Protocol) automaton focuses on the behavior of packet delivery across networks, specifically simulating the transmission and routing of datagrams.
 The DFA begins with a valid packet being created. We simulate the information each packet will be carrying with datagrams containing IP information and information that helps ensure the packets arrive at the correct location. We also simulate the TTL, which is the time a packet has before being discarded. If the time is equal to zero, the packet is discarded simulating a dropped or undelivered packet. If all required components are present and valid, the packet is routed and successfully delivered.
 
