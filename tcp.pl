@@ -37,14 +37,3 @@ process_tcp([Instruction|RestOfInstruction], CurrentState):-
     tcp_transition(CurrentState,NextState,Instruction),
     % Call the recursive case
     process_tcp(RestOfInstruction,NextState).
-
-
-
-
-
-
-
-
-
-
-

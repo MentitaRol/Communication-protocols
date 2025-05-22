@@ -1,4 +1,3 @@
-
 %HTTP Protocol
 
 %Transitions of the automaton
