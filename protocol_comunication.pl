@@ -10,9 +10,9 @@
 :-["ip"].
 
 start_comunication(HTTP, TCP, IP) :-
-    ( start_http(HTTP) ->
-        ( start_tcp(TCP) ->
-            ( start_ip(IP) ->
+    (start_http(HTTP) ->
+        (start_tcp(TCP) ->
+            (start_ip(IP) ->
                 write('Communication successful'), nl
             ;
                 write('Communication failed (IP)'), nl,

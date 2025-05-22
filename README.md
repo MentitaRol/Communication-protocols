@@ -158,4 +158,141 @@ For the HTTP and IP protocol, there will be an additional rule to process transi
         TTL > 0,
         process_ip(Rest,q3).
 
+A file is also implemented: protocol communication where the three protocols are joined and where the flow that follows the TCP/IP model is simulated.
+
+We upload the files for each protocol
+
+    %HTTP
+    :-["http"].
+
+    %TCP
+    :-["tcp"].
+
+    %IP
+    :-["ip"].
+
+We start each automaton and if the entire process was carried out correctly, a success message is printed; otherwise, the message is displayed as a failed connection.
+
+    start_comunication(HTTP, TCP, IP) :-
+        ( start_http(HTTP) ->
+            ( start_tcp(TCP) ->
+                ( start_ip(IP) ->
+                    write('Communication successful'), nl
+                ;
+                    write('Communication failed (IP)'), nl,
+                    fail
+                )
+            ;
+                write('Communication failed (TCP)'), nl,
+                fail
+            )
+        ;
+            write('Communication failed (HTTP)'), nl,
+            fail
+        ).
+
 ## Tests
+
+In our protocol_tests.pl file, we define several test cases to validate the correct functioning of our model. These include successful test cases, which represent valid flow that the TCP/IP model follows, and failed test cases, which should be rejected.
+
+**Successful test cases:**
+
+    test1:-
+    start_comunication([clientHello,get,/,www,.,youtube],
+                       [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                       [packet,datagram,4,fragmentation,dest]).
+    test2:-
+        start_comunication([clientHello,get,/,www,.,amazon],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,10,fragmentation,dest]).
+    test3:-
+        start_comunication([clientHello,get,/,www,.,wikipedia],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,37,fragmentation,dest]).
+    test4:-
+        start_comunication([clientHello,get,/,www,.,github],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,1,fragmentation,dest]).
+    test5:-
+        start_comunication([clientHello,get,/,www,.,google],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,5,fragmentation,dest]).
+    test6:-
+        start_comunication([clientHello,post,/,123456],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,16,fragmentation,dest]).
+    test7:-
+        start_comunication([clientHello,post,/,10],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,120,fragmentation,dest]).
+    test8:-
+        start_comunication([clientHello,post,/,100],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,2,fragmentation,dest]).
+    test9:-
+        start_comunication([clientHello,post,/,-10],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,2,fragmentation,dest]).
+
+**Failed test cases:**
+
+    test0:-
+        start_comunication([],[],[]).
+
+    test10:-
+        start_comunication([clientHello,get,/,blog,.,kick],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,4,fragmentation,dest]).
+
+    test11:-
+        start_comunication([clientHello,get,#,www,.,facebook],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,4,fragmentation,dest]).
+
+    test12:-
+        start_comunication([clientHello,get,/,www,.,facebook],
+                        [syn,syn/ack,ack,image1234,fin/ack,ack,fin/ack,ack,end],
+                        [packet,123456,4,fragmentation,dest]).
+
+    test13:-
+        start_comunication([clientHello,post,/,10],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,0,fragmentation,dest]).
+
+    test14:-
+        start_comunication([clientHello,post,/,senddata],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,20,fragmentation,dest]).
+
+    test15:-
+        start_comunication([clientHello,post,/,24],
+                        [syn,syn/ack,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,-10,fragmentation,dest]).
+
+    test16:-
+        start_comunication([clientHello,post,/,12056],
+                        [syn,syn/ack,ack,data,fin/ack,ack,notfin,ack,end],
+                        [packet,datagram,8,fragmentation,dest]).
+
+    test17:-
+        start_comunication([clientHello,post,/,12056],
+                        [syn,0,ack,data,fin/ack,ack,fin/ack,ack,end],
+                        [packet,datagram,8,fragmentation,dest]).
+
+To execute our automaton tests, follow these steps in the Prolog terminal:
+
+**Load the test file:**
+
+["protocol_tests"].
+
+**Execute the run function:**
+
+run_tests.
+
+![Image](https://github.com/user-attachments/assets/6cc5d478-c0d9-4837-bd21-37c5e7d17bc6)
+
+![Image](https://github.com/user-attachments/assets/449f8ddc-7705-4e66-bfb4-657dd4a1661d)
+
+![Image](https://github.com/user-attachments/assets/b2771e35-d44a-4959-9875-7ecdf5cd7e73)
+
+The test cases print a message indicating the flow that our request was following and if it reached the end, that is, if all the data was correct, it will indicate it with the message: "Communication successful" and if there was an error, it will indicate in which layer the failure occurred.
