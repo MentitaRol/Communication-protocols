@@ -296,3 +296,88 @@ To execute our automaton tests, follow these steps in the Prolog terminal:
 ![Image](https://github.com/user-attachments/assets/b2771e35-d44a-4959-9875-7ecdf5cd7e73)
 
 The test cases print a message indicating the flow that our request was following and if it reached the end, that is, if all the data was correct, it will indicate it with the message: "Communication successful" and if there was an error, it will indicate in which layer the failure occurred.
+
+## Analysis
+
+#### Time complexity:
+In our implementation, we use recursion to process each instruction of the petition while transitioning between states.
+
+Each instruction is processed once by making a transition between states. The recursive depth is at most n, meaning the number of recursive calls is proportional to the number of instructions in the protocol.
+
+**HTTP:**
+
+    process_http([Instruction|RestOfInstruction],CurrentState):-
+        http_transition(CurrentState,NextState,Instruction),
+        process_http(RestOfInstruction,NextState).
+
+**TCP:**
+
+    process_tcp([Instruction|RestOfInstruction], CurrentState):-
+        tcp_transition(CurrentState,NextState,Instruction),
+        process_tcp(RestOfInstruction,NextState).
+
+**IP:**
+
+    process_ip([Instruction|RestOfInstruction],CurrentState):-
+        ip_transition(CurrentState,NextState,Instruction),
+        process_ip(RestOfInstruction,NextState).
+
+
+For dynamic validations that are performed to accept different inputs, there is also a complexity of O(n), where n is the length of the input that is entered.
+
+**HTTP:**
+
+    process_http([Domain|Rest], q5) :-
+        atom(Domain),
+        process_http(Rest, q6).
+
+    process_http([Data|Rest], q8) :-
+        number(Data),
+        process_http(Rest, q6).
+
+**IP:**
+
+    process_ip([TTL|Rest],q2):-
+        number(TTL),
+        TTL > 0,
+        process_ip(Rest,q3).
+
+Finally, in the file where we put together all the protocols to simulate the final flow, we have a complexity of O(n) in the best case and O(n + m + k) in the worst case. This is because we have to go through each protocol to move on to the next one, so the complexities of each one add up if they are all correct since all their states are traversed.
+
+    start_comunication(HTTP, TCP, IP) :-
+        (start_http(HTTP) ->
+            (start_tcp(TCP) ->
+                (start_ip(IP) ->
+                    write('Communication successful'), nl
+                ;
+                    write('Communication failed (IP)'), nl,
+                    fail
+                )
+            ;
+                write('Communication failed (TCP)'), nl,
+                fail
+            )
+        ;
+            write('Communication failed (HTTP)'), nl,
+            fail
+        ).
+
+So based on this, the time complexity of this approach is O(n + m + k).
+
+#### Other possible implementations:
+
+## References
+
+Foqum Analytics. (2024, February 8). Finite State Machine | FOQUM. FOQUM. https://foqum.io/blog/termino/finite-state-machine/
+
+GeeksforGeeks. (2024c, September 12). Introduction of Finite Automata. GeeksforGeeks. https://www.geeksforgeeks.org/introduction-of-finite-automata/
+
+GeeksforGeeks. (2023, January 28). Application of Deterministic Finite Automata (DFA). GeeksforGeeks. https://www.geeksforgeeks.org/application-of-deterministic-finite-automata-dfa/?utm_source=chatgpt.com
+
+GeeksforGeeks. (2025, May 8). TCP/IP Model. GeeksforGeeks. https://www.geeksforgeeks.org/tcp-ip-model/
+
+LinkedIn. (2023, August 25). What are the main characteristics and examples of logic programming paradigms? https://www.linkedin.com/advice/0/what-main-characteristics-examples-logic-programming
+
+Sharma, N. (2022, March 5). Understanding logical programming paradigm with Prolog. Medium. https://medium.com/@neerajsharma95/understanding-logical-programming-paradigm-with-prolog-49b738a293ca
+
+Ikusi. (2023, May 2). How do communication protocols effectively transmit data? Ikusi MX. https://www.ikusi.com/mx/blog/protocolos-de-comunicacion/#:~:text=Un%20protocolo%20de%20comunicaci%C3%B3n%20es,de%20manera%20correcta%20y%20organizada.
