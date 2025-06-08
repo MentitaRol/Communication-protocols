@@ -386,6 +386,45 @@ With a functional approach we will focus on creating a code in which we will foc
 | Code is organized into logical units that can be easily extended or reused | Functions are small, reusable blocks. Composition lets you build complex behaviors. |
 | You specify **what** is true (facts and rules), and let the inference engine handle the **how** | Functional code tends to be compact and focused on **"what"** rather than **"how"** |
 
+**How I wold implement this with the functional paradigm? (Scheme)**
+
+    ;; Define the application layer - HTTP protocol
+    (define (application-layer message)
+    (list 'appData message))
+
+    ;; Define the transport layer (TCP)
+    (define (transport-layer app-packet)
+    (list 'tcpSegment
+            (list 'portOrg 1234)
+            (list 'portDst 80)
+            (list 'data app-packet)))
+
+    ;; Define the internet layer (IP)
+    (define (network-layer tcp-packet)
+    (list 'ipPacket
+            (list 'orgIP "192.168.137.1")
+            (list 'dstIP "93.184.216.34")
+            (list 'data tcp-packet)))
+
+    (define (send message)
+    (network-layer
+        (transport-layer
+        (application-layer message))))
+
+    (define packet (send "get/www.mitec.tec.mx"))
+    (pretty-print packet)
+
+![Image](https://github.com/user-attachments/assets/e7cccbc1-e992-443f-b86f-f3c7607c03ae)
+
+To transform our TCP/IP protocol model into an abstraction that follows the functional paradigm, the most important step was to reinterpret the facts and state-based reasoning used in the logical model (Prolog), and instead express the behavior of each layer as pure functions that take data, process it, and return new data.
+In the functional approach, particularly using Scheme, the focus shifts toward the flow of information between layers, what is received and what is produced at each stage. This results in a more transparent and traceable transformation process, where each function clearly represents the behavior of a protocol layer. In contrast with the logic paradigm, where the focus is on defining conditions and rules that describe how data relates.
+
+**Time complexity**
+
+With this Scheme implementation, the time complexity is **O(1)**, as each function performs a fixed operation: it receives information, wraps it in a list, and passes it on to the next function. There is no recursion or iteration involved, and the size of the input does not affect the number of steps executed.
+It's also important to highlight that this functional abstraction is simpler and more declarative than the one implemented in Prolog. While the Prolog version focused on modeling the internal states and rules of each protocol layer, the Scheme version emphasizes the flow of data between layers.
+
+
 ## References
 
 Foqum Analytics. (2024, February 8). Finite State Machine | FOQUM. FOQUM. https://foqum.io/blog/termino/finite-state-machine/
@@ -398,6 +437,10 @@ GeeksforGeeks. (2025, May 8). TCP/IP Model. GeeksforGeeks. https://www.geeksforg
 
 LinkedIn. (2023, August 25). What are the main characteristics and examples of logic programming paradigms? https://www.linkedin.com/advice/0/what-main-characteristics-examples-logic-programming
 
+Neumann, J. (2022, February 22). Advantages and disadvantages of functional programming. Medium. https://medium.com/twodigits/advantages-and-disadvantages-of-functional-programming-52a81c8bf446
+
 Sharma, N. (2022, March 5). Understanding logical programming paradigm with Prolog. Medium. https://medium.com/@neerajsharma95/understanding-logical-programming-paradigm-with-prolog-49b738a293ca
+
+TutorialsPoint. (2024, August 19). Difference Between Functional and Logical Programming. https://www.tutorialspoint.com/difference-between-functional-and-logical-programming
 
 Ikusi. (2023, May 2). How do communication protocols effectively transmit data? Ikusi MX. https://www.ikusi.com/mx/blog/protocolos-de-comunicacion/#:~:text=Un%20protocolo%20de%20comunicaci%C3%B3n%20es,de%20manera%20correcta%20y%20organizada.
