@@ -422,7 +422,14 @@ In the functional approach, particularly using Scheme, the focus shifts toward t
 **Time complexity**
 
 With this Scheme implementation, the time complexity is **O(1)**, as each function performs a fixed operation: it receives information, wraps it in a list, and passes it on to the next function. There is no recursion or iteration involved, and the size of the input does not affect the number of steps executed.
+
 It's also important to highlight that this functional abstraction is simpler and more declarative than the one implemented in Prolog. While the Prolog version focused on modeling the internal states and rules of each protocol layer, the Scheme version emphasizes the flow of data between layers.
+
+### Why Logic paradigm?
+
+After presenting and studying both paradigms, the reason for choosing the logical paradigm for this project is mainly because of the nature of the problem. Networking protocols are defined by rules, constraints, pattern matching, and state-based transitions, all of which align naturally with the logic programming model. 
+
+While the Scheme implementation using the functional paradigm offers a more abstract and simplified view with lower time complexity, it lacks the depth needed to capture the behavior and conditional structure of real protocol operations. In contrast, the Prolog implementation allows for a more detailed and expressive representation of each protocol layer, enabling better simulation of the decision-making processes involved in network communication.
 
 
 ## References
