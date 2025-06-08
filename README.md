@@ -21,9 +21,7 @@ Finite automata can be classified as:
 Deterministic Finite Automata (DFA) are particularly useful in the context of networking, as they enable the formal modeling and analysis of communication protocols. By representing the different states and transitions of a protocol, DFAs make it possible to detect design errors such as deadlocks, boundedness violations, and unspecified receptions. They provide a rigorous framework to describe the sequence of events that occur during network communications, allowing for the simulation and verification of protocol behaviors such as those in TCP/IP, HTTP, and HTTPS (GeeksforGeeks, 2023).
 
 This project applies the logic programming paradigm to model and verify communication protocols through the use of finite automata. This type of verification is essential for ensuring that information is transmitted efficiently, securely, and reliably between devices or applications. By formally analyzing the protocol’s flow, the system can help prevent miscommunications, detect inconsistencies, and protect data integrity and security in networked environments. (Ikusi, 2023)
-For this demonstration I decided to work with the TCP/IP model. As context, the TCP/IP model (Transmission Control Protocol/Internet Protocol) is a four-layer networking framework that enables reliable communication between devices over interconnected networks. It provides a standardized set of protocols.
-
-for transmitting data across interconnected networks, ensuring efficient and error-free delivery. Each layer has specific functions that help manage different aspects of network communication, making it essential for understanding and working with modern networks (GeeksforGeeks, 2025).
+For this demonstration I decided to work with the TCP/IP model. As context, the TCP/IP model (Transmission Control Protocol/Internet Protocol) is a four-layer networking framework that enables reliable communication between devices over interconnected networks. It provides a standardized set of protocols for transmitting data across interconnected networks, ensuring efficient and error-free delivery. Each layer has specific functions that help manage different aspects of network communication, making it essential for understanding and working with modern networks (GeeksforGeeks, 2025).
 To maintain the scope of the project, I decided to make a very general abstraction of the TCP/IP model. This abstraction is simplified yet explicit enough to demonstrate the core behavior of the protocols involved.
 Of the four layers, I will only be modeling three, each represented by a key protocol:
 
@@ -365,17 +363,21 @@ Finally, in the file where we put together all the protocols to simulate the fin
 So based on this, the time complexity of this approach is O(n + m + k).
 
 ### Other possible implementations:
+
+#### Functional paradigm
+
 A different alternative to the logical paradigm is the functional paradigm. This could be a powerful way to model communication between protocols, as it allows each protocol to be represented as a function that transforms an input into an output. Representing it this way allows for features such as pattern matching and recursion to analyze and process each step of the protocol in a clear and expressive manner.
+With a functional approach we will focus on creating a code in which we will focus on explicitly defining what we receive and what we return instead of having an implicit response that focuses on finding possible ways to solve it.
 
-The code can becomes easier to reason formally and verify its correctness. This feature also facilitates the natural parallelization of operations, since pure functions do not depend on or modify shared states, allowing parts of the computation to be executed concurrently without the risk of race conditions or inconsistencies.
+**Logic to Functional paradigm Transformation**
 
-However, the functional paradigm could also have certain disadvantages. Without proper optimization, such as using tail recursion to avoid stack overflows or implementing memoization to avoid repeated calculations, functional solutions can be less efficient in terms of time and resource consumption compared to more direct paradigms such as logic. Another important point to consider is the complexity of a functional language like Scheme. When comparing the code between Prolog and Scheme, we notice a significant difference when implementing certain elements.
+| Logic (Prolog) | Functional (Scheme) |
+|-------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| Define each protocol as a set of facts and rules to deduce truths            | Define each layer of the TCP/IP protocol as a function                      |
+| Automatic search through solutions                                           | Data never changes                                                          |
+| Prolog engine controls the flow via search                                   | You control how each step happens                                           |
+| We use facts                                                                 | We will use lists and data structures                                       |
 
-**Complexity Analysis:**
-
-Processing lists or sequences of data in a functional approach typically has a linear cost of O(n), where n represents the length of the list or the number of steps in the protocol.
-
-In this sense, if we directly evaluate our implementation, we might consider that, at first glance, the functional paradigm has a lower time complexity.
 
 
 ## References
