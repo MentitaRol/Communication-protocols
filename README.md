@@ -372,13 +372,19 @@ With a functional approach we will focus on creating a code in which we will foc
 **Logic to Functional paradigm Transformation**
 
 | Logic (Prolog) | Functional (Scheme) |
-|-------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| Define each protocol as a set of facts and rules to deduce truths            | Define each layer of the TCP/IP protocol as a function                      |
-| Automatic search through solutions                                           | Data never changes                                                          |
-| Prolog engine controls the flow via search                                   | You control how each step happens                                           |
-| We use facts                                                                 | We will use lists and data structures                                       |
+|-----------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| Define each protocol as a set of facts and rules to deduce truths | Define each layer of the TCP/IP protocol as a function |
+| Automatic search through solutions | Data never changes |
+| Prolog engine controls the flow via search | You control how each step happens |
+| We use facts | We will use lists and data structures |
 
+**Advantages of each paradigm**
 
+| Logic (Prolog) | Functional (Scheme) |
+|-----------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| Easily express complex relationships with concise rules; ideal for knowledge representation | Pure functions with no side effects make outputs determined solely by inputs |
+| Code is organized into logical units that can be easily extended or reused | Functions are small, reusable blocks. Composition lets you build complex behaviors. |
+| You specify **what** is true (facts and rules), and let the inference engine handle the **how** | Functional code tends to be compact and focused on **"what"** rather than **"how"** |
 
 ## References
 
